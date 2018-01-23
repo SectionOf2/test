@@ -1,4 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
+remote="$1"
+url="$2"
+
+IFS=' '
+
+allow=$(git config prevent-push-master.allow)
+for pattern in $allow
+do
+    if [[ $url =~ $pattern ]]; then
+        exit 0
+    fi
+done
 
 while read local_ref local_sha1 remote_ref remote_sha1
     do
